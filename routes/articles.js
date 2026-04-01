@@ -15,6 +15,15 @@ router.post("/", async (req,res)=>{
     res.status(201).json(article)
 })
 
+router.get("/search", async(req,res)=>{
+    const keyword = req.query.q
+
+    const results = await Article.find({
+        $text: { $search: keyword }
+    })
+
+    res.json(results)
+})
 
 router.get("/", async(req,res)=>{
     const articles = await Article.find()
